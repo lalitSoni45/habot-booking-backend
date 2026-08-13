@@ -1,138 +1,108 @@
-HabotConnect - LSA Service Booking Backend
+# HabotConnect - LSA Service Booking Backend
 
-Position: Python Backend Developer Hiring Project
-Candidate: Lalit Soni
-Technology: Python, Django, Django REST Framework, PostgreSQL
+**Position:** Python Backend Developer Hiring Project  
+**Candidate:** Lalit Soni  
+**Technology:** Python, Django, Django REST Framework, PostgreSQL
 
-1. Project Overview
+---
 
-This project is a backend prototype for an LSA (Learning Support
-Assistant) Service Booking platform.
+## 📌 1. Project Overview
 
-The platform connects parents with Learning Support Assistants (LSAs)
-and provides backend APIs for:
+This project is a backend prototype for an **LSA (Learning Support Assistant) Service Booking platform**.
 
-Parent management
+The platform connects parents with Learning Support Assistants (LSAs) and provides backend APIs for:
 
-LSA profile management
+- Parent management
+- LSA profile management
+- Booking requests
+- LSA search and availability
+- Double-booking prevention
+- Payment webhook processing
+- Automated testing
+- Continuous Integration using GitHub Actions
 
-Booking requests
+---
 
-LSA search and availability
+## 🎯 2. Problem Statement
 
-Double-booking prevention
+The system needs to reliably manage booking requests between parents and Learning Support Assistants.
 
-Payment webhook processing
+### Main Challenges
 
-Automated testing
+1. Store booking information using a relational database.
+2. Maintain relationships between parents, LSAs, bookings, and payments.
+3. Prevent overlapping bookings for the same LSA.
+4. Search LSAs efficiently using skills and availability.
+5. Avoid unnecessary database queries and the N+1 query problem.
+6. Process payment success and failure events.
+7. Update booking state based on payment events.
+8. Validate API input and return meaningful HTTP status codes.
+9. Automatically test the backend after code changes.
 
-Continuous Integration using GitHub Actions
+---
 
-The backend is built using Python, Django, Django REST Framework, and
-PostgreSQL.
+## ✨ 3. Features
 
-2. Problem Statement
+### 📅 Booking Management
 
-The system needs to reliably manage booking requests between parents and
-Learning Support Assistants.
+- Create a new booking.
+- Validate booking data.
+- Check LSA availability.
+- Prevent overlapping sessions.
+- Return appropriate HTTP status codes.
+- Store valid bookings in PostgreSQL.
 
-The main backend challenges are:
+### 🔎 LSA Search
 
-Store booking information using a relational database.
+- Search LSAs using skills.
+- Filter active LSAs.
+- Check availability.
+- Use Django ORM for database operations.
+- Avoid unnecessary repeated database queries.
 
-Maintain relationships between parents, LSAs, bookings, and
-payments.
+### 💳 Payment Webhook
 
-Prevent overlapping bookings for the same LSA.
+- Receive payment events.
+- Accept transaction information.
+- Process payment success and failure.
+- Update the related booking state according to the payment result.
 
-Search LSAs efficiently using skills and availability.
+### 🧪 Automated Testing
 
-Avoid unnecessary database queries and the N+1 query problem.
+The project contains automated tests covering:
 
-Process payment success and failure events.
+- Successful booking
+- Invalid booking data
+- Double booking
+- LSA search
+- Payment webhook
 
-Update booking state based on payment events.
+### ⚙️ Continuous Integration
 
-Validate API input and return meaningful HTTP status codes.
+GitHub Actions automatically runs the Django test suite when code is pushed to the repository.
 
-Automatically test the backend after code changes.
+---
 
-3. Features
+## 🛠️ 4. Technology Stack
 
-Booking Management
+| Technology | Purpose |
+|---|---|
+| **Python** | Backend programming language |
+| **Django** | Web framework |
+| **Django REST Framework** | REST API development |
+| **PostgreSQL** | Relational database |
+| **Requests** | External service integration |
+| **Django TestCase** | Automated testing |
+| **Git** | Version control |
+| **GitHub Actions** | Continuous Integration |
 
-Create a new booking.
+---
 
-Validate booking data.
+## 🏗️ 5. Project Architecture
 
-Check LSA availability.
+The project follows **Django MVT (Model-View-Template)** architecture with Django REST Framework for REST API development.
 
-Prevent overlapping sessions.
-
-Return appropriate HTTP status codes.
-
-Store valid bookings in PostgreSQL.
-
-LSA Search
-
-Search LSAs using skills.
-
-Filter active LSAs.
-
-Check availability.
-
-Use Django ORM for database operations.
-
-Avoid unnecessary repeated database queries.
-
-Payment Webhook
-
-Receive payment events.
-
-Accept transaction information.
-
-Process payment success and failure.
-
-Update the related booking state according to the payment result.
-
-Automated Testing
-
-The project contains automated tests covering the main backend
-workflows:
-
-Successful booking
-
-Invalid booking data
-
-Double booking
-
-LSA search
-
-Payment webhook
-
-Continuous Integration
-
-GitHub Actions automatically runs the Django test suite when code is
-pushed to the repository.
-
-4. Technology Stack
-
-Technology              Purpose
-
-Python                  Backend programming language
-Django                  Web framework
-Django REST Framework   REST API development
-PostgreSQL              Relational database
-Requests                External service integration
-Django TestCase         Automated testing
-Git                     Version control
-GitHub Actions          Continuous Integration
-
-5. Project Architecture
-
-The project follows Django's MVT (Model-View-Template) architecture with
-Django REST Framework for REST API development.
-
+```text
 Client
    |
    | HTTP Request
@@ -156,9 +126,11 @@ PostgreSQL
    |
    v
 HTTP Response
+```
 
-Request Flow
+### 🔄 Booking Request Flow
 
+```text
 POST /api/v1/bookings/
         |
         v
@@ -179,91 +151,88 @@ HTTP 409   Create Booking
              |
              v
          HTTP 201
+```
 
-6. MVC vs MVT Design Choice
+---
 
-Django MVT
+## 🧩 6. MVC vs MVT Design Choice
 
-Django uses the MVT (Model-View-Template) pattern.
+### Django MVT
 
-Model: Represents database entities and relationships.
+Django uses the **MVT (Model-View-Template)** pattern.
 
-View: Handles requests, business logic, and responses.
+- **Model:** Represents database entities and relationships.
+- **View:** Handles requests, business logic, and responses.
+- **Template:** Generates HTML for traditional Django pages.
 
-Template: Generates HTML for traditional Django pages.
+This project mainly exposes REST APIs, so **Django REST Framework** is used to return JSON responses instead of traditional HTML pages.
 
-This project mainly exposes REST APIs, so Django REST Framework is used
-to return JSON responses instead of traditional HTML pages.
-
-Why Django + DRF?
+### Why Django + DRF?
 
 Django and Django REST Framework were selected because they provide:
 
-Built-in ORM
+- Built-in ORM
+- Database migrations
+- Request and response handling
+- Serializer validation
+- HTTP status code support
+- Structured application architecture
+- Automated testing support
 
-Database migrations
+---
 
-Request and response handling
+## 🗄️ 7. Database Design
 
-Serializer validation
+The project uses **PostgreSQL** as the relational database.
 
-HTTP status code support
+### 👤 Parent
 
-Structured application architecture
+| Field | Purpose |
+|---|---|
+| `id` | Primary key |
+| `name` | Parent name |
+| `email` | Parent email |
+| `phone` | Parent phone |
+| `created_at` | Creation timestamp |
 
-Good support for automated testing
+### 🧑‍🏫 LSAProfile
 
-7. Database Design
+| Field | Purpose |
+|---|---|
+| `id` | Primary key |
+| `name` | LSA name |
+| `email` | LSA email |
+| `skills` | Skills provided by the LSA |
+| `hourly_rate` | LSA hourly rate |
+| `is_active` | Whether the LSA is active |
+| `created_at` | Creation timestamp |
 
-The project uses PostgreSQL as the relational database.
+### 📅 BookingRequest
 
-Parent
+| Field | Purpose |
+|---|---|
+| `id` | Primary key |
+| `parent` | Foreign key to Parent |
+| `lsa` | Foreign key to LSAProfile |
+| `start_time` | Session start time |
+| `end_time` | Session end time |
+| `status` | Current booking status |
+| `created_at` | Creation timestamp |
 
-Field        Purpose
+### 💳 Payment
 
-id           Primary key
-name         Parent name
-email        Parent email
-phone        Parent phone
-created_at   Creation timestamp
+| Field | Purpose |
+|---|---|
+| `id` | Primary key |
+| `booking` | Related BookingRequest |
+| `transaction_id` | External payment transaction ID |
+| `amount` | Payment amount |
+| `status` | Payment status |
+| `created_at` | Creation timestamp |
 
-LSAProfile
+### 🔗 Relationships
 
-Field         Purpose
-
-id            Primary key
-name          LSA name
-email         LSA email
-skills        Skills provided by the LSA
-hourly_rate   LSA hourly rate
-is_active     Whether the LSA is active
-created_at    Creation timestamp
-
-BookingRequest
-
-Field        Purpose
-
-id           Primary key
-parent       Foreign key to Parent
-lsa          Foreign key to LSAProfile
-start_time   Session start time
-end_time     Session end time
-status       Current booking status
-created_at   Creation timestamp
-
-Payment
-
-Field            Purpose
-
-id               Primary key
-booking          Related BookingRequest
-transaction_id   External payment transaction ID
-amount           Payment amount
-status           Payment status
-created_at       Creation timestamp
-
-Relationships
-
+```text
 Parent
    |
    | 1 : Many
@@ -280,32 +249,42 @@ BookingRequest
    | 1 : 1
    v
 Payment
+```
 
-8. API Documentation
+---
 
-Base URL:
+## 🌐 8. API Documentation
 
-http://127.0.0.1:8000
+### 8.1 📅 Create Booking
 
-8.1 Create Booking
+**Method**
 
-Method: POST
+```text
+POST
+```
 
-Endpoint:
+**Endpoint**
 
+```text
 /api/v1/bookings/
+```
 
-Request:
+### Request Body
 
+```json
 {
     "parent": 1,
     "lsa": 1,
     "start_time": "2026-08-13T14:00:00Z",
     "end_time": "2026-08-13T15:00:00Z"
 }
+```
 
-Success: HTTP 201 Created
+### ✅ Successful Response
 
+**HTTP 201 Created**
+
+```json
 {
     "id": 1,
     "parent": 1,
@@ -315,165 +294,211 @@ Success: HTTP 201 Created
     "status": "PENDING",
     "created_at": "2026-08-13T..."
 }
+```
 
-Invalid or missing required fields return HTTP 400 Bad Request.
+### ❌ Invalid Request
+
+Invalid or missing required fields return:
+
+```text
+HTTP 400 Bad Request
+```
+
+### 🚫 Double Booking
 
 If the LSA is already booked during an overlapping time:
 
+```text
 HTTP 409 Conflict
+```
 
+Example:
+
+```json
 {
     "error": "LSA is already booked during this time."
 }
+```
 
-8.2 LSA Search
+---
 
-Method: GET
+### 8.2 🔎 LSA Search
 
-Endpoint:
+**Method**
 
+```text
+GET
+```
+
+**Endpoint**
+
+```text
 /api/v1/lsas/search/
+```
 
 Example:
 
+```text
 GET /api/v1/lsas/search/?skill=Mathematics
+```
 
-The endpoint searches active LSAs using the requested skill and
-availability conditions.
+The endpoint searches active LSAs using the requested skill and availability conditions.
 
-Successful requests return HTTP 200 OK.
+Successful requests return:
 
-8.3 Payment Webhook
+```text
+HTTP 200 OK
+```
 
-Method: POST
+---
 
-Endpoint:
+### 8.3 💳 Payment Webhook
 
+**Method**
+
+```text
+POST
+```
+
+**Endpoint**
+
+```text
 /api/v1/payments/webhook/
+```
 
-Example:
+Example request:
 
+```json
 {
     "booking_id": 1,
     "transaction_id": "TXN_10001",
     "status": "SUCCESS",
     "amount": "500.00"
 }
+```
 
-The webhook processes the payment event and updates the related booking
-state according to the payment result.
+The webhook processes the payment event and updates the related booking state according to the payment result.
 
-9. Double-Booking Prevention
+---
 
-The booking API checks whether the selected LSA already has an
-overlapping booking.
+## 🚫 9. Double-Booking Prevention
 
-The overlap condition is:
+The booking API checks whether the selected LSA already has an overlapping booking.
 
+### Overlap Condition
+
+```text
 Existing start time < New end time
 AND
 Existing end time > New start time
+```
 
-Example:
+### Example
 
+```text
 Existing booking: 14:00 - 15:00
 New booking:      14:30 - 15:30
 
-Result: Overlap
+Result: OVERLAP
+```
 
-The API rejects the request with HTTP 409 Conflict.
+The API rejects the request with:
 
-This protects data integrity and prevents two parents from receiving the
-same LSA during overlapping sessions.
+```text
+HTTP 409 Conflict
+```
 
-10. Query Optimization and N+1 Problem
+This protects data integrity and prevents two parents from receiving the same LSA during overlapping sessions.
 
-What is the N+1 Problem?
+---
 
-The N+1 problem happens when an application first retrieves a list of
-records and then performs another database query for each record.
+## ⚡ 10. Query Optimization & N+1 Problem
 
-1 query -> fetch N LSAs
-N queries -> fetch related booking data
+### What is N+1?
+
+The **N+1 problem** happens when the application first retrieves a list of records and then performs another database query for each record.
+
+```text
+1 query → fetch N LSAs
+
+N queries → fetch related booking data
+
 Total = N + 1 queries
+```
 
 This becomes inefficient as the number of LSAs increases.
 
-Optimization Approach
+### Optimization Approach
 
-The LSA search implementation uses Django ORM filtering and related-data
-handling to keep database access efficient.
+The LSA search implementation uses Django ORM filtering and related-data handling to keep database access efficient.
 
 The main goals are:
 
-Filter data at the database level.
+- Filter data at the database level.
+- Avoid querying related booking information repeatedly inside Python loops.
+- Reduce unnecessary database round trips.
+- Keep the search endpoint scalable.
 
-Avoid querying related booking information repeatedly inside Python
-loops.
+---
 
-Reduce unnecessary database round trips.
+## 💳 11. Payment Integration
 
-Keep the search endpoint scalable.
-
-11. Payment Integration
-
-The project includes integration with an external/mock payment
-verification service using Python's requests library.
+The project includes integration with an external/mock payment verification service using Python's `requests` library.
 
 The integration is designed to:
 
-Send a request to the external service.
+1. Send a request to the external service.
+2. Receive the payment verification result.
+3. Handle successful and failed responses.
+4. Handle request exceptions.
+5. Log errors when external communication fails.
+6. Update the booking/payment state based on the result.
 
-Receive the payment verification result.
+### Example
 
-Handle successful and failed responses.
-
-Handle request exceptions.
-
-Log errors when external communication fails.
-
-Update the booking/payment state based on the result.
-
-Example:
-
+```text
 Transaction ID: TXN_10001
 Amount: 500.00
 Status: SUCCESS
+```
 
-12. Automated Testing
+---
 
-The project contains automated tests for the main API and business
-rules.
+## 🧪 12. Automated Testing
 
-Test scenarios include:
+The project contains automated tests for the main API and business rules.
 
-Successful booking creation.
+### Test Scenarios
 
-Invalid booking request.
+1. Successful booking creation.
+2. Invalid booking request.
+3. Double-booking prevention.
+4. LSA search.
+5. Payment webhook processing.
 
-Double-booking prevention.
+### Run Tests
 
-LSA search.
-
-Payment webhook processing.
-
-Run tests with:
-
+```bash
 python manage.py test
+```
 
 The test suite helps detect regressions when backend code changes.
 
-13. Continuous Integration
+---
 
-GitHub Actions is configured to run the test suite automatically when
-code is pushed to the repository.
+## ⚙️ 13. Continuous Integration
 
-Workflow directory:
+GitHub Actions is configured to run the test suite automatically when code is pushed to the repository.
 
+### Workflow Directory
+
+```text
 .github/workflows/
+```
 
-Typical workflow:
+### CI Flow
 
+```text
 Developer pushes code
         |
         v
@@ -492,172 +517,198 @@ Run migrations / setup
 Run automated tests
         |
         v
-Pass / Fail result
+PASS / FAIL
+```
 
-14. Setup Instructions
+---
 
-Prerequisites
+## 💻 14. Setup Instructions
 
-Python 3.13 or compatible Python version
+### Prerequisites
 
-PostgreSQL
+- Python 3.13 or compatible Python version
+- PostgreSQL
+- Git
 
-Git
+### Step 1 — Clone Repository
 
-Step 1: Clone Repository
-
+```bash
 git clone https://github.com/lalitSoni45/habot-booking-backend.git
 cd habot-booking-backend
+```
 
-Step 2: Create Virtual Environment
+### Step 2 — Create Virtual Environment
 
+```bash
 python -m venv venv
+```
 
-Step 3: Activate Virtual Environment
+### Step 3 — Activate Virtual Environment
 
 Windows PowerShell:
 
+```powershell
 venv\Scripts\Activate.ps1
+```
 
-Step 4: Install Dependencies
+### Step 4 — Install Dependencies
 
+```bash
 pip install -r requirements.txt
+```
 
-Step 5: Configure PostgreSQL
+### Step 5 — Configure PostgreSQL
 
-Create the PostgreSQL database used by the project and configure the
-database credentials in Django settings.
+Create the PostgreSQL database used by the project and configure the database credentials in Django settings.
 
 Example:
 
+```text
 Database: habot_db
 Host: localhost
 Port: 5432
 User: postgres
+```
 
-Do not commit database passwords or secret keys to Git.
+> **Security:** Do not commit database passwords or secret keys to Git.
 
-Step 6: Run Migrations
+### Step 6 — Run Migrations
 
+```bash
 python manage.py makemigrations
 python manage.py migrate
+```
 
-Step 7: Run Development Server
+### Step 7 — Run Development Server
 
+```bash
 python manage.py runserver
+```
 
 The development server will normally be available at:
 
+```text
 http://127.0.0.1:8000/
+```
 
-15. Example Testing Flow
+---
 
-Step 1 --- Create Booking
+## 🧑‍💻 15. Example Testing Flow
 
+### Step 1 — Create Booking
+
+```text
 POST /api/v1/bookings/
+```
 
 Expected:
 
+```text
 HTTP 201 Created
+```
 
-Step 2 --- Try an Overlapping Booking
+### Step 2 — Try an Overlapping Booking
 
 Send another booking for the same LSA with an overlapping time.
 
 Expected:
 
+```text
 HTTP 409 Conflict
+```
 
-Step 3 --- Search LSAs
+### Step 3 — Search LSAs
 
+```text
 GET /api/v1/lsas/search/
+```
 
 Expected:
 
+```text
 HTTP 200 OK
+```
 
-Step 4 --- Send Payment Webhook
+### Step 4 — Send Payment Webhook
 
+```text
 POST /api/v1/payments/webhook/
+```
 
-The payment event is processed and the related booking state is updated
-according to the payment result.
+The payment event is processed and the related booking state is updated according to the payment result.
 
-16. Project Structure
+---
 
+## 📁 16. Project Structure
+
+```text
 habot-booking-backend/
-|
-+-- .github/
-|   +-- workflows/
-|
-+-- booking/
-|   +-- migrations/
-|   +-- models.py
-|   +-- serializers.py
-|   +-- views.py
-|   +-- urls.py
-|   +-- tests.py
-|
-+-- config/
-|   +-- settings.py
-|   +-- urls.py
-|
-+-- .gitignore
-+-- manage.py
-+-- requirements.txt
-+-- README.md
+│
+├── .github/
+│   └── workflows/
+│
+├── booking/
+│   ├── migrations/
+│   ├── models.py
+│   ├── serializers.py
+│   ├── views.py
+│   ├── urls.py
+│   └── tests.py
+│
+├── config/
+│   ├── settings.py
+│   └── urls.py
+│
+├── .gitignore
+├── manage.py
+├── requirements.txt
+└── README.md
+```
 
-17. Security and Data Integrity
+---
+
+## 🔒 17. Security & Data Integrity
 
 The project follows basic backend security practices:
 
-Database credentials should not be committed to Git.
+- Database credentials should not be committed to Git.
+- `.env` is excluded through `.gitignore`.
+- Virtual environment files are excluded from Git.
+- Invalid API input is rejected.
+- Booking conflicts are rejected.
+- Database relationships use foreign keys.
+- External service failures are handled.
+- Sensitive configuration should be provided through environment variables in production.
 
-.env is excluded through .gitignore.
+---
 
-Virtual environment files are excluded from Git.
+## 🔗 18. Repository
 
-Invalid API input is rejected.
-
-Booking conflicts are rejected.
-
-Database relationships use foreign keys.
-
-External service failures are handled.
-
-Sensitive configuration should be provided through environment
-variables in a production deployment.
-
-18. Repository
-
-GitHub Repository:
+**GitHub Repository:**
 
 https://github.com/lalitSoni45/habot-booking-backend
 
-19. Conclusion
+---
 
-This project demonstrates a Django-based backend for an LSA Service
-Booking platform with:
+## 🏁 19. Conclusion
 
-Relational database design
+This project demonstrates a Django-based backend for an LSA Service Booking platform with:
 
-Django ORM
+- Relational database design
+- Django ORM
+- RESTful APIs
+- Request validation
+- Double-booking prevention
+- LSA search
+- Payment webhook processing
+- External service integration
+- Automated testing
+- GitHub Actions Continuous Integration
 
-RESTful APIs
+The design focuses on **reliability, maintainability, data integrity, and efficient database access**.
 
-Request validation
+---
 
-Double-booking prevention
-
-LSA search
-
-Payment webhook processing
-
-External service integration
-
-Automated testing
-
-GitHub Actions Continuous Integration
-
-The design focuses on reliability, maintainability, data integrity, and
-efficient database access.
+**Candidate:** Lalit Soni  
+**Position:** Python Backend Developer  
+**Repository:** `lalitSoni45/habot-booking-backend`
